@@ -4,6 +4,8 @@ class Contact {
   int id;
   String name, email, phone, img;
 
+  Contact();
+
   Contact.fromMap(Map map) {
     id = map[ContactHelper.idColumn];
     name = map[ContactHelper.nameColumn];

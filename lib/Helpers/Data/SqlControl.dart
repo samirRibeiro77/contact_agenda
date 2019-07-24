@@ -21,4 +21,7 @@ class SqlControl {
   void updateContact(Contact contact) async {
     await _contact.updateContact(contact);
   }
+  Future<List> getAllContacts() async {
+    return await _contact.getAllContacts();
+  }
 }
