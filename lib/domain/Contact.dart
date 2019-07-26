@@ -1,4 +1,4 @@
-import 'package:contact_agenda/Helpers/Class/ContactHelper.dart';
+import 'package:contact_agenda/Helpers/classes/ContactHelper.dart';
 
 class Contact {
   int id;

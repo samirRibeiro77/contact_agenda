@@ -1,5 +1,6 @@
-import 'package:contact_agenda/Domain/Contact.dart';
-import 'package:contact_agenda/Helpers/Class/ContactHelper.dart';
+import 'package:contact_agenda/domain/Contact.dart';
+import 'package:contact_agenda/helpers/classes/ContactHelper.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ContactSql {
   Future<Contact> saveContact(Contact contact) async {
@@ -34,6 +35,13 @@ class ContactSql {
 
     return await database.delete(ContactHelper.contactTable,
         where: "${ContactHelper.idColumn} = ?", whereArgs: [id]);
+  }
+
+  Future<Contact> saveOrUpdateContact(Contact contact) async {
+    var database = await ContactHelper().db;
+    contact.id =
+        await database.insert(ContactHelper.contactTable, contact.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    return contact;
   }
 
   Future<int> updateContact(Contact contact) async {

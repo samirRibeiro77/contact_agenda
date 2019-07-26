@@ -1,7 +1,7 @@
-import 'package:contact_agenda/domain/Contact.dart';
 import 'package:contact_agenda/helpers/Data/SqlControl.dart';
+import 'package:contact_agenda/helpers/ui/Routes.dart';
 import 'package:flutter/material.dart';
-
+import 'package:contact_agenda/domain/Contact.dart';
 import 'package:contact_agenda/ui/cards/contact_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,18 +11,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var database = SqlControl();
+  var routes = Routes();
   var contactCard = ContactCard();
   List<Contact> contacts = List();
 
-  @override
-  void initState() {
-    super.initState();
-
+  void _loadPage() {
     database.getAllContacts().then((list) {
       setState(() {
         contacts = list;
       });
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPage();
   }
 
   @override
@@ -35,7 +39,9 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          routes.showContactPage(context).whenComplete(() {_loadPage();});
+        },
         child: Icon(Icons.add),
         backgroundColor: Colors.red,
       ),
