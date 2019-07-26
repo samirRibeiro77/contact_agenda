@@ -1,8 +1,8 @@
-import 'package:contact_agenda/Domain/Contact.dart';
-import 'package:contact_agenda/Helpers/Data/SqlControl.dart';
+import 'package:contact_agenda/domain/Contact.dart';
+import 'package:contact_agenda/helpers/Data/SqlControl.dart';
 import 'package:flutter/material.dart';
 
-import 'contact_card.dart';
+import 'package:contact_agenda/ui/cards/contact_card.dart';
 
 class HomePage extends StatefulWidget {
   @override
