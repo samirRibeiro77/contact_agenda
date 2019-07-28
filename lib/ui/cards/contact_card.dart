@@ -23,7 +23,7 @@ class ContactCard {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: contact.img != null
+                        image: contact.img != null && contact.img.isNotEmpty
                             ? FileImage(File(contact.img))
                             : AssetImage(
                                 "lib/images/contact_default_image.png"))),
