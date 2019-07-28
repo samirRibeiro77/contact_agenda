@@ -1,4 +1,4 @@
-import 'package:contact_agenda/helpers/Data/SqlControl.dart';
+import 'package:contact_agenda/helpers/data/SqlControl.dart';
 import 'package:contact_agenda/helpers/ui/Routes.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_agenda/domain/Contact.dart';

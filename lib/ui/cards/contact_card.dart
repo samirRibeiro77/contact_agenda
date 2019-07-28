@@ -1,16 +1,76 @@
 import 'dart:io';
+import 'package:contact_agenda/helpers/data/SqlControl.dart';
 import 'package:contact_agenda/domain/Contact.dart';
 import 'package:contact_agenda/helpers/ui/Routes.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactCard {
   ContactCard();
 
-  Widget getCard(BuildContext context, Contact contact) {
+  void _showOptions(BuildContext context, Contact contact) {
     var routes = Routes();
+    var database = SqlControl();
+
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+            onClosing: () {},
+            builder: (context) {
+              return Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            launch("tel:${contact.phone}");
+                          },
+                          child: Text(
+                            "Ligar",
+                            style: TextStyle(color: Colors.red, fontSize: 20.0),
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            routes.showContactPage(context, contact: contact);
+                          },
+                          child: Text(
+                            "Editar",
+                            style: TextStyle(color: Colors.red, fontSize: 20.0),
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            database.deleteContact(contact.id);
+                          },
+                          child: Text(
+                            "Excluir",
+                            style: TextStyle(color: Colors.red, fontSize: 20.0),
+                          )),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        });
+  }
+
+  Widget getCard(BuildContext context, Contact contact) {
     return GestureDetector(
         onTap: () {
-          routes.showContactPage(context, contact: contact);
+          _showOptions(context, contact);
         },
         child: Card(
             child: Padding(

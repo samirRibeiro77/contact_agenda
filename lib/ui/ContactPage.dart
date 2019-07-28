@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:contact_agenda/domain/Contact.dart';
 import 'package:flutter/material.dart';
 
@@ -93,6 +93,16 @@ class _ContactPageState extends State<ContactPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(
+                  onTap: () {
+                    ImagePicker.pickImage(source: ImageSource.camera).then((imageFile) {
+                      if (imageFile == null) {
+                        return;
+                      }
+                      setState(() {
+                        _editedContact.img = imageFile.path;
+                      });
+                    });
+                  },
                   child: Container(
                     width: 140.0,
                     height: 140.0,
