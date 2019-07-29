@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:contact_agenda/domain/Contact.dart';
 import 'package:contact_agenda/ui/cards/contact_card.dart';
 
+enum OrderOptions { orderAZ, orderZA }
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -23,6 +25,23 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _orderList(OrderOptions result) {
+    switch(result) {
+      case OrderOptions.orderAZ:
+        contacts.sort((a, b) {
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        });
+        break;
+      case OrderOptions.orderZA:
+        contacts.sort((a, b) {
+          return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+        });
+        break;
+    }
+
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,13 +53,27 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Contatos"),
+        actions: <Widget>[
+          PopupMenuButton<OrderOptions>(
+            itemBuilder: (context) =>
+            <PopupMenuEntry<OrderOptions>>[
+              const PopupMenuItem<OrderOptions>(
+                  child: Text("Ordernar de A-Z"), value: OrderOptions.orderAZ),
+              const PopupMenuItem<OrderOptions>(
+                  child: Text("Ordernar de Z-A"), value: OrderOptions.orderZA)
+            ],
+            onSelected: _orderList,
+          )
+        ],
         backgroundColor: Colors.red,
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          routes.showContactPage(context).whenComplete(() {_loadPage();});
+          routes.showContactPage(context).whenComplete(() {
+            _loadPage();
+          });
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.red,

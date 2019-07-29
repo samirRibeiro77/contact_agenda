@@ -83,6 +83,7 @@ class ContactCard {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
+                        fit: BoxFit.cover,
                         image: contact.img != null && contact.img.isNotEmpty
                             ? FileImage(File(contact.img))
                             : AssetImage(
